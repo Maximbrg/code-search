@@ -129,49 +129,17 @@ def pathh(array):
     return new_graph
 
 
-
 search_component = search()
-#target_data = pd.read_csv("evaluation.csv")
+target_data = pd.read_csv("evaluation.csv")
 target_results = {}
-#for index, row in target_data.iterrows():
+for index, row in target_data.iterrows():
 
-#    if str(row['result2']) != 'nan' and str(row['result3']) != 'nan':
-#        target_results[row['query']] = (row['result1'], row['domain'], row['result2'], row['result3'])
- #   elif str(row['result2']) != 'nan':
- #       target_results[row['query']] = (row['result1'], row['domain'], row['result2'])
-  #  else:
-    #    target_results[row['query']] = (row['result1'], row['domain'])
-
-
-classes = 0
-relashnship = 0
-neaighbors = 0
-attrubutes = 0
-i = 0
-word_length = 0
-for filename in os.listdir("data"):
-    post = class_diagram("data/" + filename)
-    classes += len(post.vertex_info)
-    relashnship += len(post.edge_info)
-    for node in post.graph.keys():
-        neaighbors += len(post.graph[node])
-        attrubutes += len(post.attributes[node])
-        word_length += len(post.old_vertex_info[node].split(" "))
-        i += 1
-    for node in post.attributes.keys():
-        for word in post.attributes[node]:
-            word_length += len(word.split(" "))
-            i += 1
-
-
-
-print(classes/9)
-print(relashnship/9)
-print(neaighbors/classes)
-print(attrubutes/classes)
-print(word_length/i)
-
-
+    if str(row['result2']) != 'nan' and str(row['result3']) != 'nan':
+        target_results[row['query']] = (row['result1'], row['domain'], row['result2'], row['result3'])
+    elif str(row['result2']) != 'nan':
+        target_results[row['query']] = (row['result1'], row['domain'], row['result2'])
+    else:
+        target_results[row['query']] = (row['result1'], row['domain'])
 
 
 data_result_search = {}
@@ -254,7 +222,7 @@ for queryname in os.listdir("queries"): #OVER POST
             i = 1
             for item in part_item:
                 name1 = item[2]
-                name2 = target_results[queryname][1] + '.xml'
+                name2 = target_results[queryname][1] + '.json'
                 if name1 == name2:
                     data_result_search[queryname][j].append(('domain', i))
                     a = item[0]
@@ -273,7 +241,7 @@ for queryname in os.listdir("queries"): #OVER POST
         i = 1
         for item in sorted_by_second:
             name1 = item[2]
-            name2 = target_results[queryname][1]+'.xml'
+            name2 = target_results[queryname][1]+'.json'
             if name1 == name2:
                 data_result_search[queryname].append(('domain', i))
                 a = item[0]

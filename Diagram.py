@@ -5,8 +5,9 @@ from Edge import Edge
 
 class Diagram:
 
-    def __init__(self, data):
-
+    def __init__(self, path):
+        with open(path) as f:
+           data = json.load(f)
         self.graph = {}
         self.vertex_info = {}
         self.vertex_type = {}

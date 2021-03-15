@@ -34,13 +34,8 @@ class search():
             type_2 = code_graph.get_type(key)
       #      print("[" + str(key) + "]: " + str(node_text) + " :: " + str(query_text))
        #     print("similarity: " + str(similarity_function(node_text, query_text)))
-            a = similarity_function(node_text, query_text)
-            b = self.get_sim_attributes(code_graph.attributes[key], query_graph.attributes[-1])
-            c = self.get_type_sim(type_1, type_2)
-            sim = (((similarity_function(node_text, query_text)*0.6 + self.get_sim_attributes(code_graph.attributes[key],
-                                                                                             query_graph.attributes[-1])
-                   *0.4) + self.get_type_sim(
-                    type_1, type_2) ) )/ 2
+            sim = (((similarity_function(node_text, query_text)) + self.get_type_sim(
+                    type_1, type_2)))/ 2
             if sim > max_similarity:
                 max_similarity = sim
                 node_id = key
