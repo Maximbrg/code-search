@@ -1,0 +1,7 @@
+{ "class": "go.GraphLinksModel",
+"relevant": "Binary  Tree | Java",
+  "nodeDataArray": [ 
+{"category":"Task", "text":"Binary  Tree", "fill":"#ffffff", "stroke":"#000000", "strokeWidth":1, "key":-1, "loc":"-632.08984375 -147.24378365842975", "refs":[], "ctxs":[], "comment":null},
+{"category":"Task", "text":"Java", "fill":"#ffffff", "stroke":"#000000", "strokeWidth":1, "key":-2, "loc":"-623.08984375 -49.24378365842972", "refs":[], "ctxs":[], "comment":null}
+ ],
+  "linkDataArray": [ {"category":"AchievedBy", "text":"achieved by", "routing":{"yb":"Normal", "oE":1}, "points":[-630.6463913664526,-131.52619103758013,-624.5332961335474,-64.96137627927934], "from":-1, "to":-2, "refs":[], "ctxs":[], "comment":null} ]}
