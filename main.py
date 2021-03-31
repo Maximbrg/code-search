@@ -5,6 +5,7 @@ import copy
 import os
 import numpy as np
 
+import read_from_cloud_storage
 
 
 def print_all_path(to_print, path_dic, curr_node, diagram, similarity, i, results, url, is_visited_vertex):
@@ -134,12 +135,19 @@ target_data = pd.read_csv("evaluation.csv")
 target_results = {}
 for index, row in target_data.iterrows():
 
+    # if str(row['result2']) != 'nan' and str(row['result3']) != 'nan':
+    #     target_results[row['query']] = (row['result1'], row['domain'], row['result2'], row['result3'])
+    # elif str(row['result2']) != 'nan':
+    #     target_results[row['query']] = (row['result1'], row['domain'], row['result2'])
+    # else:
+    #     target_results[row['query']] = (row['result1'], row['domain'])
+
     if str(row['result2']) != 'nan' and str(row['result3']) != 'nan':
-        target_results[row['query']] = (row['result1'], row['domain'], row['result2'], row['result3'])
+        target_results[str(row['query'])+'.json'] = (row['result1'], row['domain'], row['result2'], row['result3'])
     elif str(row['result2']) != 'nan':
-        target_results[row['query']] = (row['result1'], row['domain'], row['result2'])
+        target_results[str(row['query'])+'.json'] = (row['result1'], row['domain'], row['result2'])
     else:
-        target_results[row['query']] = (row['result1'], row['domain'])
+        target_results[str(row['query'])+'.json'] = (row['result1'], row['domain'])
 
 
 data_result_search = {}
@@ -149,7 +157,8 @@ for queryname in os.listdir("queries"): #OVER POST
     query = class_diagram("queries/" + queryname)
     splited = split_query(query)
     for filename in os.listdir("data"): #OVER QUERY
-        if 'query3' in queryname:
+        # if 'query3' in queryname:
+        if '31' in queryname:
             bool = True
             counter = 0
             sum = 0
@@ -164,6 +173,8 @@ for queryname in os.listdir("queries"): #OVER POST
                 new_graph = pathh(item)
                # print(filename)
                 post = class_diagram("data/" + filename)
+                # post = class_diagram(read_from_cloud_storage().get_blobs())
+                #todo
                 query.update_query(new_graph)
                 nodelist = search_component.first_similar_node(post, query.get_first_node().split(), query)
                 visited_list = {}
@@ -172,7 +183,7 @@ for queryname in os.listdir("queries"): #OVER POST
                 results = search_component.greedy_algorithm_recursive(nodelist, post, query, -2, 2, 0.65, visited_list)
                 #   draw.draw_class_diagran(results, post)
                 dic, list1, printed_results = print_results(results, nodelist[0], post)
-              #  print(printed_results)
+                print(printed_results)
                 sum = sum + printed_results[len(printed_results) - 1][1]
 
                 for item in list1:
@@ -184,14 +195,17 @@ for queryname in os.listdir("queries"): #OVER POST
         else:
             #print(filename)
             post = class_diagram("data/" + filename)
+            # print(filename)
+            # todo
+            # post = class_diagram(read_from_cloud_storage.get_blobs())
             nodelist = search_component.first_similar_node(post, query.get_first_node().split(), query)
             visited_list = {}
             for key in post.vertex_info:
                 visited_list[key] = False
-            results = search_component.greedy_algorithm_recursive(nodelist, post, query, -2, 2, 0.65, visited_list)
+            results = search_component.greedy_algorithm_recursive(nodelist, post, query, -2, 2, 0.65, visited_list) # next_nude, k, tresh
             #   draw.draw_class_diagran(results, post)8
             dic, list1, printed_results = print_results(results, nodelist[0], post)
-         #   print(printed_results)
+            # print(printed_results)
             for item in list1:
                 numOfNodes = len(item.split(','))
                 output.append((item, dic[item]/numOfNodes, filename))
@@ -206,7 +220,8 @@ for queryname in os.listdir("queries"): #OVER POST
         sorted_by_second = sorted(output, key=lambda tup: tup[1])
         sorted_by_second.reverse()
 
-    #print(sorted_by_second)
+    # print(printed_results)
+    print(sorted_by_second)
     # print(sorted_by_second)
     data_result_search[queryname] = []
     j = 0

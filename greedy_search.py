@@ -1,3 +1,5 @@
+import csv
+
 import sematch.sematch.semantic.similarity as smch
 from nltk.corpus import stopwords
 from similarity_maxtrix import matrix
@@ -22,8 +24,8 @@ class search():
 
     def first_similar_node(self, code_graph, query_text, query_graph):
         similarity_function = self.get_sim_between_2_nodes
-     #   print("Start finding the most similar vertex in the code graph to the first vertex of a query:")
-     #   print(str(query_text))
+        # print("Start finding the most similar vertex in the code graph to the first vertex of a query:")
+        # print(str(query_text))
         max_similarity = 0
         node_id = -1
         for key in code_graph.vertex_info:
@@ -32,8 +34,8 @@ class search():
             node_text = code_graph.vertex_info[key].split()
             type_1 = query_graph.get_type(-1)
             type_2 = code_graph.get_type(key)
-      #      print("[" + str(key) + "]: " + str(node_text) + " :: " + str(query_text))
-       #     print("similarity: " + str(similarity_function(node_text, query_text)))
+            # print("[" + str(key) + "]: " + str(node_text) + " :: " + str(query_text))
+            # print("similarity: " + str(similarity_function(node_text, query_text)))
             sim = (((similarity_function(node_text, query_text)) + self.get_type_sim(
                     type_1, type_2)))/ 2
             if sim > max_similarity:
@@ -41,14 +43,17 @@ class search():
                 node_id = key
     #    print("The most similar node is: " + str(node_id))
       #  print()
+        with open('first_similar_node.csv', 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([max_similarity, node_id])
 
         return [(max_similarity, node_id)]
 
     def next_similar_node(self, code_graph, query_text, query_arc, init_node, similarity_function, k, query_diagram,
                           id, is_visited_vertex, query_graph, id_query, th):
-        #print("Start finding "+str(k)+" most similar vertices in the code graph to the vertex of a query:")
-        #print(str(query_text))
-        #print("The neighbors of vertex: " + str(init_node) + " are: " + str(code_graph.neighbors(init_node)))
+        # print("Start finding "+str(k)+" most similar vertices in the code graph to the vertex of a query:")
+        # print(str(query_text))
+        # print("The neighbors of vertex: " + str(init_node) + " are: " + str(code_graph.neighbors(init_node)))
         max_similarity = []
         for key in code_graph.neighbors(init_node):
             node_text = code_graph.vertex_info[key].split()
@@ -58,8 +63,8 @@ class search():
             similarity = (similarity_function(node_text, query_text) + self.get_sim_between_2_edges(node_arc,
                                                                                                     query_arc) + self.get_type_sim(
                 type_1, type_2)) / 3
-            #print("[" + str(key) + "]: " + str(node_text) + " :: " + str(query_text))
-            #print("similarity: " + str(similarity))
+            # print("[" + str(key) + "]: " + str(node_text) + " :: " + str(query_text))
+            # print("similarity: " + str(similarity))
             if similarity < th or is_visited_vertex[key]:
                 continue
             if len(max_similarity) < k:
@@ -75,14 +80,17 @@ class search():
                 node_arc = code_graph.arc_type(init_node, key)
                 # similarity = (similarity_function(node_text, query_text) + get_sim_between_2_edges(node_arc,
                 #                                                                                    "query_arc")) / 2
-                similarity = ((similarity_function(node_text, query_text)*0.75 + self.get_sim_attributes(code_graph.attributes[key], query_graph.attributes[id_query])*0.25)+ self.get_sim_between_2_edges(node_arc,
+                similarity = (similarity_function(node_text, query_text)+ self.get_sim_between_2_edges(node_arc,
                                                                                                         query_arc) + self.get_type_sim(
                     type_1, type_2)) / 3
                 if not is_visited_vertex[key]:
                     max_similarity.append((similarity, key))
         max_similarity.sort(key=lambda tup: tup[0])
-        #print("The most similar node is: " + str(max_similarity))
-        #print()
+        # print("The most similar node is: " + str(max_similarity))
+        # print()
+        with open('most_similar_node.csv', 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([max_similarity])
         return max_similarity
 
     def greedy_algorithm_recursive(self, nodelist, code_graph, query_graph, id_query, k, th, is_visited_vertex):
