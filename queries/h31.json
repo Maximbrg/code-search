@@ -1,0 +1,10 @@
+{ "class": "go.GraphLinksModel",
+  "nodeDataArray": [ 
+{"category":"Task", "text":"Parse JSON Array", "fill":"#ffffff", "stroke":"#000000", "strokeWidth":1, "key":-1, "loc":"-440.08149304139494 -263.7726961122391", "refs":[], "ctxs":[], "comment":null},
+{"category":"Task", "text":"get", "fill":"#ffffff", "stroke":"#000000", "strokeWidth":1, "key":-2, "loc":"-543.0814930413949 -116.77269611223909", "refs":[], "ctxs":[], "comment":null},
+{"category":"Task", "text":"set", "fill":"#ffffff", "stroke":"#000000", "strokeWidth":1, "key":-3, "loc":"-360.0814930413949 -107.77269611223909", "refs":[], "ctxs":[], "comment":null}
+ ],
+  "linkDataArray": [ 
+{"category":"ConsistsOf", "text":"consists of", "routing":{"yb":"Normal", "oE":1}, "points":[-451.0945001158678,-248.05510349138945,-532.068485966922,-132.4902887330887], "from":-1, "to":-2, "refs":[], "ctxs":[], "comment":null},
+{"category":"ConsistsOf", "text":"consists of", "routing":{"yb":"Normal", "oE":1}, "points":[-432.0211891332669,-248.05510349138945,-368.14179694952287,-123.4902887330887], "from":-1, "to":-3, "refs":[], "ctxs":[], "comment":null}
+ ]}

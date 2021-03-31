@@ -5,7 +5,7 @@ import copy
 import os
 import numpy as np
 
-import read_from_cloud_storage
+#import read_from_cloud_storage
 
 
 def print_all_path(to_print, path_dic, curr_node, diagram, similarity, i, results, url, is_visited_vertex):
@@ -158,7 +158,7 @@ for queryname in os.listdir("queries"): #OVER POST
     splited = split_query(query)
     for filename in os.listdir("data"): #OVER QUERY
         # if 'query3' in queryname:
-        if '31' in queryname:
+        if 'h3' in queryname:
             bool = True
             counter = 0
             sum = 0
@@ -276,7 +276,7 @@ i = 0
 j = 0
 
 for key in data_result_search.keys():
-    if 'query3' not in key:
+    if 'h3' not in key:
         isEntered_MRR_exact = False
         isEntered_exact_MRR_domain = False
         for result in data_result_search[key]:
